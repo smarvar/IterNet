@@ -5,11 +5,10 @@ from PIL import Image
 from glob import glob
 from skimage.transform import resize
 
-raw_training_x_path_DRIVE = './data/DRIVE/training/images/*.tif'
+raw_training_x_path_DRIVE = './data/DRIVE/training/images/*.bmp'
 raw_training_y_path_DRIVE = './data/DRIVE/training/1st_manual/*.gif'
-raw_test_x_path_DRIVE = './data/DRIVE/test/images/*.tif'
+raw_test_x_path_DRIVE = './data/DRIVE/test/images/*.bmp'
 raw_test_y_path_DRIVE = './data/DRIVE/test/1st_manual/*.gif'
-raw_test_mask_path_DRIVE = './data/DRIVE/test/mask/*.gif'
 
 raw_training_x_path_CHASEDB1 = './data/CHASEDB1/training/images/*.jpg'
 raw_training_y_path_CHASEDB1 = './data/CHASEDB1/training/1st_manual/*1stHO.png'
@@ -25,7 +24,7 @@ raw_test_mask_path_STARE = './data/STARE/test/mask/*mask.png'
 
 raw_data_path = None
 raw_data_path_DRIVE = [raw_training_x_path_DRIVE, raw_training_y_path_DRIVE, raw_test_x_path_DRIVE,
-                       raw_test_y_path_DRIVE, raw_test_mask_path_DRIVE]
+                       raw_test_y_path_DRIVE]
 raw_data_path_CHASEDB1 = [raw_training_x_path_CHASEDB1, raw_training_y_path_CHASEDB1, raw_test_x_path_CHASEDB1,
                           raw_test_y_path_CHASEDB1, raw_test_mask_path_CHASEDB1]
 raw_data_path_STARE = [raw_training_x_path_STARE, raw_training_y_path_STARE, raw_test_x_path_STARE,
@@ -33,7 +32,7 @@ raw_data_path_STARE = [raw_training_x_path_STARE, raw_training_y_path_STARE, raw
 
 HDF5_data_path = './data/HDF5/'
 
-DESIRED_DATA_SHAPE_DRIVE = (576, 576)
+DESIRED_DATA_SHAPE_DRIVE = (500, 500)
 DESIRED_DATA_SHAPE_CHASEDB1 = (960, 960)
 DESIRED_DATA_SHAPE_STARE = (592, 592)
 DESIRED_DATA_SHAPE = None
@@ -148,7 +147,7 @@ def getTestData(XorYorMask, dataset):
     global HDF5_data_path, raw_data_path_DRIVE, raw_data_path_CHASEDB1, raw_data_path_STARE
 
     if dataset == 'DRIVE':
-        raw_test_x_path, raw_test_y_path, raw_test_mask_path = raw_data_path_DRIVE[2:]
+        raw_test_x_path, raw_test_y_path = raw_data_path_DRIVE[2:]
     elif dataset == 'CHASEDB1':
         raw_test_x_path, raw_test_y_path, raw_test_mask_path = raw_data_path_CHASEDB1[2:]
     elif dataset == 'STARE':
@@ -159,9 +158,8 @@ def getTestData(XorYorMask, dataset):
     elif XorYorMask == 1:
         raw_splited = raw_test_y_path.split('/')
     else:
-        if not raw_test_mask_path:
-            return None
-        raw_splited = raw_test_mask_path.split('/')
+        return None
+        
 
     data_path = ''.join([HDF5_data_path, dataset, '/', '/'.join(raw_splited[3:-1]), '/data.hdf5'])
     f = h5py.File(data_path, 'r')
