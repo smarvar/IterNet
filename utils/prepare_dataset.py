@@ -70,13 +70,8 @@ def read_input(path):
 
 def preprocessData(data_path, dataset):
     global DESIRED_DATA_SHAPE
-
     data_path = list(sorted(glob(data_path)))
-
-    if data_path[0].find('mask') > 0:
-        return np.array([read_input(image_path) for image_path in data_path])
-    else:
-        return np.array([resize(read_input(image_path), DESIRED_DATA_SHAPE) for image_path in data_path])
+    return np.array([resize(read_input(image_path), DESIRED_DATA_SHAPE) for image_path in data_path])
 
 
 def createHDF5(data, HDF5_data_path):
