@@ -8,7 +8,7 @@ from keras.utils import plot_model
 from utils import define_model, prepare_dataset
 
 
-def train(iteration=3, DATASET='DRIVE', crop_size=128, need_au=True, ACTIVATION='ReLU', dropout=0.1, batch_size=32,
+def train(iteration=3, DATASET='DRIVE', crop_size=128, need_au=True, ACTIVATION='ReLU', dropout=0.1, batch_size=16,
           repeat=4, minimum_kernel=32, epochs=200):
     model_name = f"Final_Emer_Iteration_{iteration}_cropsize_{crop_size}_epochs_{epochs}"
 
