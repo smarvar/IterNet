@@ -25,7 +25,7 @@ def train(iteration=3, DATASET='DRIVE', crop_size=128, need_au=True, ACTIVATION=
     except:
         pass
 
-    load_path = f"trained_model/{DATASET}/{model_name}_weights.best.hdf5"
+    load_path = f"trained_model/{DATASET}/{model_name}.hdf5"
     try:
         model.load_weights(load_path, by_name=True)
     except:
@@ -40,7 +40,7 @@ def train(iteration=3, DATASET='DRIVE', crop_size=128, need_au=True, ACTIVATION=
         write_images=True, embeddings_freq=0, embeddings_layer_names=None,
         embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 
-    save_path = f"trained_model/{DATASET}/{model_name}.hdf5"
+    save_path = f"/gdrive/My Drive/tidal segmentation/trained_model/{DATASET}/{model_name}.hdf5"
     checkpoint = ModelCheckpoint(save_path, monitor='final_out_loss', verbose=1, save_best_only=True, mode='min')
 
     data_generator = define_model.Generator(batch_size, repeat, DATASET)
