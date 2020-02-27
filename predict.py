@@ -100,9 +100,9 @@ def predict(ACTIVATION='ReLU', dropout=0.1, batch_size=32, repeat=4, minimum_ker
             cv2.imwrite(f"./output/{DATASET}/crop_size_{crop_size}/out{out_id + 1}/{i + 1:02}.png", pred_)
             out_id += 1
 
-    for out_id in range(iteration + 1)[-1:]:
-        print('\n\n', f"out{out_id + 1}")
-        evaluate(gt_list_out[f"out{out_id + 1}"], pred_list_out[f"out{out_id + 1}"], DATASET)
+    #for out_id in range(iteration + 1)[-1:]:
+    #    print('\n\n', f"out{out_id + 1}")
+    #    evaluate(gt_list_out[f"out{out_id + 1}"], pred_list_out[f"out{out_id + 1}"], DATASET)
 
 
 if __name__ == "__main__":
