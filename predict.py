@@ -55,16 +55,9 @@ def predict(ACTIVATION='ReLU', dropout=0.1, batch_size=32, repeat=4, minimum_ker
     model.load_weights(load_path, by_name=False)
 
     imgs = test_data[0]
-    segs = test_data[1]
-    masks = test_data[2]
-
+            
     for i in tqdm(range(len(imgs))):
-
         img = imgs[i]
-        seg = segs[i]
-        if masks:
-            mask = masks[i]
-
         patches_pred, new_height, new_width, adjustImg = crop_prediction.get_test_patches(img, crop_size, stride_size)
         preds = model.predict(patches_pred)
 
@@ -79,21 +72,11 @@ def predict(ACTIVATION='ReLU', dropout=0.1, batch_size=32, repeat=4, minimum_ker
             with open(f"./output/{DATASET}/crop_size_{crop_size}/out{out_id + 1}/{i + 1:02}.pickle", 'wb') as handle:
                 pickle.dump(pred_, handle, protocol=pickle.HIGHEST_PROTOCOL)
             pred_ = resize(pred_, IMAGE_SIZE[::-1])
-            if masks:
-                mask_ = mask
-                mask_ = resize(mask_, IMAGE_SIZE[::-1])
-            seg_ = seg
-            seg_ = resize(seg_, IMAGE_SIZE[::-1])
-            gt_ = (seg_ > 0.5).astype(int)
-            gt_flat = []
             pred_flat = []
             for p in range(pred_.shape[0]):
                 for q in range(pred_.shape[1]):
-                    if not masks or mask_[p, q] > 0.5:  # Inside the mask pixels only
-                        gt_flat.append(gt_[p, q])
-                        pred_flat.append(pred_[p, q])
+                    pred_flat.append(pred_[p, q])
 
-            gt_list_out[f"out{out_id + 1}"] += gt_flat
             pred_list_out[f"out{out_id + 1}"] += pred_flat
 
             pred_ = 255. * (pred_ - np.min(pred_)) / (np.max(pred_) - np.min(pred_))
