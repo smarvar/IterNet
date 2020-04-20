@@ -1,0 +1,98 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "iternet training",
+      "provenance": [],
+      "collapsed_sections": [],
+      "toc_visible": true,
+      "authorship_tag": "ABX9TyMUoBzp2ccL0EqnQBox0rrV",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/juanigp/IterNet/blob/master/Notebook%20entrenamiento\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "3KhNjfXfv6qc",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "!git clone https://github.com/juanigp/IterNet\n",
+        "from google.colab import drive\n",
+        "drive.mount('/gdrive', force_remount = True)\n",
+        "#antes de correr el script tengo que tener configurado todos los directorios, hasta los que no voy a usar (ej training)\n",
+        "#crear el directorio para DRIVE dataset\n",
+        "#%mv data_training data\n",
+        "#%mkdir trained_model\n",
+        "#%mkdir trained_model/DRIVE\n",
+        "#%cp \"/gdrive/My Drive/tidal segmentation/trained_model/DRIVE/Final_Emer_Iteration_3_cropsize_128_epochs_200.hdf5\" trained_model/DRIVE/\n",
+        "#%rm -rf output\n",
+        "\n",
+        "#hay que cambia ruta de checkpoints en training.py\n",
+        "#save_path = f\"/gdrive/My Drive/tidal segmentation/trained_model/{DATASET}/{model_name}.hdf5\""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "QKYPRhSJD4q7",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "%cd /content/IterNet\n",
+        "!unzip \"data.zip\""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "bV29_vtfGtNa",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "%load_ext tensorboard\n",
+        "%tensorboard --logdir output"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "Rs0WjHHNv9SC",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        "import train\n",
+        "train.train(batch_size = 16)"
+      ],
+      "execution_count": 0,
+      "outputs": []
+    }
+  ]
+}
